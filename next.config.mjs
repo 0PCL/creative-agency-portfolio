@@ -13,6 +13,7 @@ const nextConfig = {
   basePath: '/creative-agency-portfolio',
   assetPrefix: '/creative-agency-portfolio/',
   trailingSlash: true,
+  distDir: 'dist',
 }
 
 export default nextConfig
