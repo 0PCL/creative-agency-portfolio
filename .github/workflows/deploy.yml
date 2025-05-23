@@ -12,6 +12,8 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_BASE_PATH: /creative-agency-portfolio
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,5 +37,6 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist
-          branch: gh-pages 
+          folder: out
+          branch: gh-pages
+          clean: true 
