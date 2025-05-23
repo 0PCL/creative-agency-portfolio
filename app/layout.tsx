@@ -1,16 +1,18 @@
+"use client"
+
 import "./globals.css"
 import { Inter } from "next/font/google"
-import { ThemeProvider } from "@/components/theme-provider"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
-import type React from "react"
+import FullScreenMenu from "./components/FullScreenMenu"
+import FloatingActionButton from "./components/FloatingActionButton"
+import { useState } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata = {
-  title: "Núcleo de Empreendedorismo da USP",
-  description: "Fomentando o espírito empreendedor na comunidade universitária",
-    generator: 'v0.dev'
+  title: "Creative Agency Portfolio",
+  description: "A modern creative agency portfolio showcasing our work and services.",
 }
 
 export default function RootLayout({
@@ -18,14 +20,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+
   return (
-    <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen bg-background text-foreground`}>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-        </ThemeProvider>
+    <html lang="en" className="scroll-smooth">
+      <body className={inter.className}>
+        <Header onMenuClick={() => setIsMenuOpen(true)} />
+        <FullScreenMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)} />
+        {children}
+        <FloatingActionButton />
+        <Footer />
       </body>
     </html>
   )

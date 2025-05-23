@@ -1,15 +1,23 @@
 import Hero from "./components/Hero"
-import QuemSomos from "./components/QuemSomos"
-import Eventos from "./components/Eventos"
-import Parceiros from "./components/Parceiros"
+import AboutUs from "./components/AboutUs"
+import Services from "./components/Services"
+import PortfolioGrid from "./components/PortfolioGrid"
+import Testimonials from "./components/Testimonials"
+import Contact from "./components/Contact"
+import Newsletter from "./components/Newsletter"
+import CustomCursor from "./components/CustomCursor"
 
 export default function Home() {
   return (
-    <>
+    <main className="relative">
+      <CustomCursor />
       <Hero />
-      <QuemSomos />
-      <Eventos />
-      <Parceiros />
-    </>
+      <AboutUs />
+      <Services />
+      <PortfolioGrid />
+      <Testimonials />
+      <Newsletter />
+      <Contact />
+    </main>
   )
 }

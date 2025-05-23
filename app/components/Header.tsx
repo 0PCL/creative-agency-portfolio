@@ -9,7 +9,11 @@ import { Menu } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
-export default function Header() {
+interface HeaderProps {
+  onMenuClick: () => void
+}
+
+export default function Header({ onMenuClick }: HeaderProps) {
   const [mounted, setMounted] = useState(false)
   const { theme } = useTheme()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -59,44 +63,43 @@ export default function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex md:gap-x-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.href}
-              className="text-sm font-medium text-foreground hover:text-primary transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-4">
-          <Button className="hidden md:inline-flex">Contato</Button>
-
-          {/* Mobile Navigation */}
-          <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon" aria-label="Menu">
-                <Menu className="h-5 w-5" />
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="right">
-              <div className="flex flex-col gap-6 mt-10">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className="text-lg font-medium text-foreground hover:text-primary transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <Button className="mt-4">Contato</Button>
-              </div>
-            </SheetContent>
-          </Sheet>
+        <div className="hidden md:flex md:items-center md:gap-x-8">
+          <nav className="flex gap-x-8">
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                className="text-sm font-medium text-foreground hover:text-primary transition-colors"
+              >
+                {item.name}
+              </Link>
+            ))}
+          </nav>
+          <Button className="ml-6">Contato</Button>
         </div>
+
+        {/* Mobile Navigation */}
+        <Sheet>
+          <SheetTrigger asChild className="md:hidden">
+            <Button variant="ghost" size="icon" aria-label="Menu">
+              <Menu className="h-5 w-5" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="right">
+            <div className="flex flex-col gap-6 mt-10">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-lg font-medium text-foreground hover:text-primary transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+              <Button className="mt-4">Contato</Button>
+            </div>
+          </SheetContent>
+        </Sheet>
       </div>
     </motion.header>
   )
