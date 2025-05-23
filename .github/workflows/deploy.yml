@@ -26,35 +26,16 @@ jobs:
         with:
           version: 8
 
-      - name: Get pnpm store directory
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
-      - name: Setup pnpm cache
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
       - name: Install dependencies
-        run: |
-          pnpm install --frozen-lockfile
-          ls -la
-          echo "Node modules installed:"
-          ls -la node_modules
+        run: pnpm install --no-frozen-lockfile
 
       - name: Build
-        run: |
-          pnpm build
-          echo "Build output:"
-          ls -la out
+        env:
+          NEXT_PUBLIC_BASE_PATH: /creative-agency-portfolio
+        run: pnpm build
 
       - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: out
-          branch: gh-pages
-          clean: true 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out 
