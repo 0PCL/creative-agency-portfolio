@@ -11,6 +11,8 @@ const nextConfig = {
     unoptimized: true,
   },
   basePath: '/creative-agency-portfolio',
+  assetPrefix: '/creative-agency-portfolio/',
+  trailingSlash: true,
 }
 
 export default nextConfig
