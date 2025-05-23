@@ -12,8 +12,6 @@ permissions:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    env:
-      NEXT_PUBLIC_BASE_PATH: /creative-agency-portfolio
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,11 +26,31 @@ jobs:
         with:
           version: 8
 
+      - name: Get pnpm store directory
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
       - name: Install dependencies
-        run: pnpm install
+        run: |
+          pnpm install --frozen-lockfile
+          ls -la
+          echo "Node modules installed:"
+          ls -la node_modules
 
       - name: Build
-        run: pnpm build
+        run: |
+          pnpm build
+          echo "Build output:"
+          ls -la out
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
